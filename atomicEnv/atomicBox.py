@@ -1,10 +1,10 @@
 import numpy as np
-from .kernel import generate_mnl
+from .kernel import obtainBox
 from typing import Tuple
 import time
 from loguru import logger
 
-class assignGrid(object):
+class atomicBox(object):
     def __init__(self,
                  cell: np.ndarray,
                  fftw: Tuple[int, int, int],
@@ -52,7 +52,7 @@ class assignGrid(object):
 
         logger.info(f"start generate_mnl: {time.time() - start:.3f}s")
 
-        mnl = generate_mnl(alpha, self.adjust_rcut_)
+        mnl = obtainBox(alpha, self.adjust_rcut_)
 
         logger.info(f"end generate_mnl: {time.time() - start:.3f}s")
 
@@ -70,13 +70,3 @@ class assignGrid(object):
     def __str__(self):
         return f" cell:\n{self.cell_},\n\n fftw:\n{self.fftw_},\n\n atom_pos:\n{self.atom_pos_},\n\n rcut:\n{self.rcut_}"
 
-if __name__ == "__main__":
-    cell = np.eye(3) * 10
-    fftw = (200, 200, 200)
-    atom_pos = np.array([5.0, 5.0, 5.0])
-    rcut = 2
-    assign_grid = assignGrid(cell, fftw, atom_pos, rcut)
-    idx = assign_grid.compute_idx()
-    l, m, n = idx.T
-    grid = np.zeros(fftw, dtype=int)
-    grid[l, m, n] = 1

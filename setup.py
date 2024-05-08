@@ -7,7 +7,7 @@ import sys
 extensions = [
     Extension(
         "kernel",                            # Module name
-        ["./assignGrid/kernel.pyx"],         # Cython source file
+        ["./atomicEnv/kernel.pyx"],         # Cython source file
         include_dirs=[numpy.get_include()],  # Include NumPy headers
         extra_compile_args=['-O3', '-march=native'],
     )
@@ -18,5 +18,5 @@ if len(sys.argv) == 1:
 
 setup(
     ext_modules=cythonize(extensions, language_level="3"),
-    package_dir={'': 'assignGrid'},  # This tells setuptools that packages are under assignGrid
+    package_dir={'': 'atomicEnv'},  # This tells setuptools that packages are under assignGrid
 )
